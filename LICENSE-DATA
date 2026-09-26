@@ -1,0 +1,23 @@
+Data license
+
+Copyright (c) 2026 Daniel Mori, Piero Delgado and Joaquín Rivadeneyra
+
+The data in this repository are licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/legalcode
+
+"Data" means every file that is not source code, in particular:
+
+- api/eval/dataset/        question sets, expected articles, required terms, scope labels
+- api/eval/runs/           stored system responses, scores, reports, scope codings, probe results
+- fault-injection/results/ per-trial records and summaries
+- fault-injection/mock-n8n/*.json
+- n8n/                     exported workflow definitions
+
+Source code (*.py, *.mjs and the package manifests) is licensed under the MIT License in
+LICENSE.
+
+The legal corpus in work/corpus/ is a Markdown conversion of official Peruvian legislative,
+administrative and judicial texts obtained from public sources. Under Article 9 of Legislative
+Decree 822 (Peruvian Copyright Law), official texts of a legislative, administrative or judicial
+nature are not protected by copyright. They are redistributed here so that the evaluation can be
+reproduced; CC BY 4.0 applies only to the conversion, not to the underlying texts.

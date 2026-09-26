@@ -1,0 +1,51 @@
+{
+  "message": "Entiendo que te preocupa la situación de la pensión de alimentos para tu hija si el padre no puede cumplir con ella. En Perú, la ley contempla estos casos y establece un orden de responsabilidad para otros familiares.\n\n### ¿Quiénes están obligados a pasar alimentos si el padre no puede?\n\nSi el padre de tu hija no puede cumplir con la pensión de alimentos, ya sea por pobreza extrema, ausencia o incapacidad, la ley peruana establece que otros familiares deben asumir esta responsabilidad. El orden de prelación es el siguiente:\n\n1.  **Hermanos mayores de edad:** Si la menor tiene hermanos mayores de edad, ellos serían los primeros en asumir la obligación.\n2.  **Abuelos:** En ausencia de hermanos mayores o si estos no pueden cumplir, la obligación recae en los abuelos. Generalmente, se demanda a los abuelos paternos en estos casos.\n3.  **Parientes colaterales hasta el tercer grado:** Esto incluye a los tíos de la menor.\n4.  **Otros responsables:** En última instancia, otras personas que tengan responsabilidad sobre la niña o adolescente.\n\nLa obligación de prestar alimentos pasa al siguiente familiar en la lista solo si se demuestra que el obligado principal no tiene los medios económicos para cumplir con la pensión sin poner en riesgo su propia subsistencia.\n\n### Para afinar la orientación\n\n*   ¿Existe alguna sentencia o acuerdo previo de pensión de alimentos para su hija?\n*   ¿La imposibilidad del padre de cumplir con la pensión es temporal o permanente?",
+  "citations": [
+    {
+      "citation_id": "d5131e77d2",
+      "summary_snippet": "Establece la obligación de los padres y el orden de prelación para otros familiares en caso de ausencia o desconocimiento del paradero de los padres.",
+      "original_snippet": "Es obligación de los padres prestar alimentos a sus hijos. Por ausencia de los padres o desconocimiento de su paradero, prestan alimentos en el orden de prelación siguiente: - 1. Los hermanos mayores de edad; - 2.",
+      "file_name": "Código de los niños y adolescentes",
+      "file_url": "https://cdn.www.gob.pe/uploads/document/file/9600510/7858302-codigo_de_los_ninhos_y_adolescentes.pdf?v=1773357476",
+      "locator": "Art. 93",
+      "breadcrumb": "Libro Segundo libro segundo - al niño y al adolescente Sistema Nacional de Atención Integral > Titulo I - La familia y los adultos responsables de los niños y adolescentes > Capitulo IV alimentos > Art. 93",
+      "locator_source": "exact",
+      "locator_scope": "excerpt"
+    },
+    {
+      "citation_id": "acd5195c3f",
+      "summary_snippet": "Detalla el orden específico de los parientes obligados a prestar alimentos: hermanos mayores, abuelos, parientes colaterales hasta el tercer grado y otros responsables.",
+      "original_snippet": "o desconocimiento de su paradero, prestan alimentos en el orden de prelación siguiente: - 1. Los hermanos mayores de edad; - 2. Los abuelos; - 3. Los parientes colaterales hasta el tercer grado; y - 4. Otros responsables del niño o del adolescente.",
+      "file_name": "Código de los niños y adolescentes",
+      "file_url": "https://cdn.www.gob.pe/uploads/document/file/9600510/7858302-codigo_de_los_ninhos_y_adolescentes.pdf?v=1773357476",
+      "locator": "Art. 93",
+      "breadcrumb": "Libro Segundo libro segundo - al niño y al adolescente Sistema Nacional de Atención Integral > Titulo I - La familia y los adultos responsables de los niños y adolescentes > Capitulo IV alimentos > Art. 93",
+      "locator_source": "exact",
+      "locator_scope": "excerpt"
+    },
+    {
+      "citation_id": "50c1754833",
+      "summary_snippet": "Indica que la obligación alimentaria puede pasar a otros parientes si el deudor no puede cumplir sin poner en peligro su propia subsistencia, y establece la prelación entre ascendientes y descendientes.",
+      "original_snippet": "Artículo 478.- Si teniéndose en cuenta las demás obligaciones del cónyuge deudor de los alimentos, no se halla en condiciones de prestarlos sin poner en peligro su propia subsistencia, según su situación, están obligados los parientes antes que el cónyuge. JURISPRUDENCIA DE LA CORTE SUPREMA DE JUSTICIA Obligación de alimentos entre ascendientes y descendientes Artículo 479.- Entre los ascendientes y los descendientes, la obligación de darse alimentos pasa por causa de pobreza del que debe prestarlos al obligado que le sigue.",
+      "file_name": "CODIGO CIVIL",
+      "file_url": "https://spijlibre.minjus.gob.pe/content/publicaciones_oficiales/img/Codigo-Civil.pdf",
+      "locator": "Arts. 478 y 479",
+      "breadcrumb": "Libro III - Derecho de familia > Seccion Cuarta - Amparo Familiar > Titulo I - Alimentos y Bienes de Familia > Capitulo Primero - Alimentos > Arts. 478 y 479",
+      "locator_source": "exact",
+      "locator_scope": "excerpt_multi"
+    }
+  ],
+  "confidenceStatus": "HIGH",
+  "confidenceReason": null,
+  "nextSteps": [
+    "Reunir pruebas que demuestren la imposibilidad del padre de cumplir con la pensión de alimentos.",
+    "Identificar a los posibles obligados según el orden de prelación (hermanos mayores, abuelos, tíos).",
+    "Evaluar la situación económica de los posibles obligados para determinar su capacidad de asumir la pensión."
+  ],
+  "specialistSupportRecommended": false,
+  "citationSupportStatus": "GOOD",
+  "clarifyingQuestions": [],
+  "agentTokenCost": 3,
+  "language": "es",
+  "language_requested": "es"
+}

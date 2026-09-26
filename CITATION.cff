@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this package, please cite it as below."
+type: software
+title: "A Citation-Grounded Multi-Agent LLM System for Trustworthy Family Law Orientation in Peru"
+abstract: >-
+  Replication package: evaluation harness, question sets, stored system responses,
+  scope-classification data, citation-resolver bench, fault-injection experiment
+  and n8n workflow definitions.
+authors:
+  - given-names: Daniel
+    family-names: Mori
+    affiliation: "Universidad Peruana de Ciencias Aplicadas (UPC)"
+    email: daniel.mori@upc.edu.pe
+  - given-names: Piero
+    family-names: Delgado
+    affiliation: "Universidad Peruana de Ciencias Aplicadas (UPC)"
+  - given-names: Joaquín
+    family-names: Rivadeneyra
+    affiliation: "Universidad Peruana de Ciencias Aplicadas (UPC)"
+version: 1.0.0
+license:
+  - MIT
+  - CC-BY-4.0
+repository-code: "https://github.com/LegalFam/evaluation"
+keywords:
+  - large language models
+  - trustworthy AI
+  - retrieval-augmented generation
+  - explainable artificial intelligence
+  - citation grounding
+  - attribution
+  - multi-agent systems
+  - legal AI
+  - access to justice

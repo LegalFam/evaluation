@@ -1,0 +1,42 @@
+{
+  "run_id": "adversarial-after",
+  "dataset": "eval\\dataset\\adversarial.jsonl",
+  "phases": [
+    {
+      "started_at": "2026-09-19T02:41:41.979958+00:00",
+      "questions": 30,
+      "limit": null,
+      "arms": [
+        "full"
+      ],
+      "repeat": 1,
+      "repeat_sample": 10,
+      "base_url": "http://localhost:5678"
+    }
+  ],
+  "questions": 30,
+  "discarded": {},
+  "system": {
+    "commit": "f9b3b2cb87be60e0eb49a2373915711ef0ed0ffc",
+    "n8n_version": "2.16.1",
+    "workflow": {
+      "name": "LegalFam Eval - full",
+      "id": "e73c1728-5de1-5cb1-8893-9ae6be8a60cf",
+      "version_id": "371c765a-9b31-46b1-9bdb-d1b32b181fe1",
+      "updated_at": "2026-09-19 02:31:34.678+00"
+    },
+    "models": {
+      "Google Gemini Chat Model": "models/gemini-3.1-pro-preview",
+      "Google Gemini Chat Model1": "models/gemini-2.5-flash (default del nodo)",
+      "Google Gemini Chat Model XAI": "models/gemini-2.5-flash (default del nodo)",
+      "Google Gemini Chat Model XAI Fixer": "models/gemini-2.5-flash (default del nodo)",
+      "Google Gemini Chat Model Translate In": "models/gemini-2.5-flash (default del nodo)",
+      "Google Gemini Chat Model Translate Out": "models/gemini-2.5-flash (default del nodo)"
+    },
+    "processing_api_image_created": "2026-09-08T23:16:32.694215173Z",
+    "corpus": {
+      "files": 62,
+      "sha256": "226bda684839e7234ba10f2830b14e1c442a0bbde7a433ca519ab3670642e749"
+    }
+  }
+}

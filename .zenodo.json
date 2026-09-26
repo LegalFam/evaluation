@@ -1,0 +1,27 @@
+{
+  "title": "A Citation-Grounded Multi-Agent LLM System for Trustworthy Family Law Orientation in Peru: replication package",
+  "upload_type": "software",
+  "description": "<p>Replication package for the article <em>A Citation-Grounded Multi-Agent LLM System for Trustworthy Family Law Orientation in Peru</em>. It contains the deterministic evaluation harness and scorer, the 63 evaluation questions with expected articles and required terms, the stored responses of the five ablation arms (full, no_xai, no_rag, base, no_xai_inline), the workflow patcher that builds each arm from the production n8n workflow, the 30-question scope boundary set with labels, rationale, per-response coding and the three-pass classifier probe, the citation-resolver bench, the fault-injection experiment (scenarios S0 to S8, Playwright runner, fault proxy and per-trial records), the exported n8n workflows and the 62-document legal corpus.</p><p>Re-scoring the stored run, the resolver bench and every summary figure run offline, without model access. Code is licensed under MIT and data under CC BY 4.0 (see LICENSE and LICENSE-DATA). Expert ratings are not included, to protect the anonymity of the evaluators.</p>",
+  "creators": [
+    {"name": "Mori, Daniel", "affiliation": "Universidad Peruana de Ciencias Aplicadas (UPC)"},
+    {"name": "Delgado, Piero", "affiliation": "Universidad Peruana de Ciencias Aplicadas (UPC)"},
+    {"name": "Rivadeneyra, Joaquín", "affiliation": "Universidad Peruana de Ciencias Aplicadas (UPC)"}
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "version": "1.0.0",
+  "language": "eng",
+  "keywords": [
+    "large language models",
+    "trustworthy AI",
+    "retrieval-augmented generation",
+    "explainable artificial intelligence",
+    "citation grounding",
+    "attribution",
+    "multi-agent systems",
+    "legal AI",
+    "access to justice",
+    "family law",
+    "Peru"
+  ]
+}

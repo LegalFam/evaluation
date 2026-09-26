@@ -1,0 +1,184 @@
+import argparse
+import copy
+import json
+import sys
+from pathlib import Path
+
+from eval.ablation import arms
+
+REPO = Path(__file__).resolve().parents[3]
+SOURCE = REPO / "n8n" / "workflows" / "LegalFam Message Flow.json"
+TARGET = REPO / "n8n" / "workflows" / "eval"
+
+
+def load_source(path: Path) -> dict:
+    if not path.exists():
+        raise SystemExit(f"no se encontro el workflow de produccion: {path}")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def summarize(original: dict, variant: dict, arm: str) -> str:
+    before = {item["name"] for item in original["nodes"]}
+    after = {item["name"] for item in variant["nodes"]}
+
+    lines = [f"--- {arm} " + "-" * (66 - len(arm))]
+    lines.append(f"  webhook           /{arms.node(variant, 'Webhook')['parameters']['path']}")
+    lines.append(f"  nodos             {len(after)} (produccion: {len(before)})")
+
+    removed = sorted(before - after)
+    if removed:
+        lines.append(f"  nodos eliminados  {', '.join(removed)}")
+
+    for name in sorted(after & before):
+        source_node = next(item for item in original["nodes"] if item["name"] == name)
+        variant_node = next(item for item in variant["nodes"] if item["name"] == name)
+        changes = _changed_fields(source_node, variant_node)
+        if changes:
+            lines.append(f"  {name:<32} {', '.join(changes)}")
+
+    return "\n".join(lines)
+
+
+def _changed_fields(before: dict, after: dict) -> list[str]:
+    changes: list[str] = []
+    old = before.get("parameters", {})
+    new = after.get("parameters", {})
+
+    old_message = (old.get("options") or {}).get("systemMessage", "")
+    new_message = (new.get("options") or {}).get("systemMessage", "")
+    if old_message != new_message:
+        delta = len(new_message) - len(old_message)
+        changes.append(f"systemMessage {delta:+d} chars")
+
+    if old.get("inputSchema") != new.get("inputSchema"):
+        changes.append("inputSchema reescrito")
+    if old.get("jsCode") != new.get("jsCode"):
+        changes.append("jsCode reescrito")
+    if old.get("path") != new.get("path"):
+        changes.append(f"path -> {new.get('path')}")
+
+    old_temperature = (old.get("options") or {}).get("temperature")
+    new_temperature = (new.get("options") or {}).get("temperature")
+    if old_temperature != new_temperature:
+        changes.append(f"temperature -> {new_temperature}")
+
+    return changes
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Genera los workflows de la ablacion")
+    parser.add_argument("--source", type=Path, default=SOURCE)
+    parser.add_argument("--out", type=Path, default=TARGET)
+    parser.add_argument("--dry-run", action="store_true", help="Muestra el diff sin escribir")
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Falla si los brazos en disco no coinciden con el workflow de produccion",
+    )
+    parser.add_argument("--arm", action="append", help="Genera solo estos brazos")
+    parser.add_argument(
+        "--bind-credential",
+        action="append",
+        metavar="NOMBRE=ID",
+        help="Reasigna una credencial por nombre al id que tenga la instancia destino. "
+        "Usalo con --out hacia un directorio temporal: los ficheros versionados deben "
+        "conservar los ids de produccion.",
+    )
+    args = parser.parse_args(argv)
+
+    original = load_source(args.source)
+    selected = args.arm or list(arms.FACTORIAL)
+
+    print(f"origen : {args.source}")
+    print(f"destino: {args.out}\n")
+
+    variants: list[tuple[str, dict]] = []
+    for arm in selected:
+        if arm not in arms.ARMS:
+            print(f"brazo desconocido: {arm} (disponibles: {', '.join(arms.ARMS)})")
+            return 2
+        try:
+            variant = arms.build(copy.deepcopy(original), arm)
+        except arms.PatchError as exc:
+            print(f"FALLO el brazo {arm}: {exc}")
+            print("\n-> el workflow de produccion cambio y el parche ya no encaja.")
+            print("   Revisa eval/ablation/arms.py antes de correr nada: un parche que no")
+            print("   aplica produce un brazo que no esta ablacionado y no se nota.")
+            return 2
+        if args.bind_credential:
+            rebound = bind_credentials(variant, parse_bindings(args.bind_credential))
+            if rebound:
+                print(f"  {arm:<16} credenciales reasignadas: {rebound}")
+        variants.append((arm, variant))
+        if not args.check:
+            print(summarize(original, variant, arm))
+
+    if args.check:
+        return check(variants, args.out)
+
+    if args.dry_run:
+        print("\n(dry-run: no se escribio nada)")
+        return 0
+
+    args.out.mkdir(parents=True, exist_ok=True)
+    for arm, variant in variants:
+        serialize(args.out / f"legalfam-eval-{arm}.json", variant)
+        print(f"\nescrito: {args.out / f'legalfam-eval-{arm}.json'}")
+
+    return 0
+
+
+def parse_bindings(raw: list[str]) -> dict[str, str]:
+    bindings: dict[str, str] = {}
+    for item in raw:
+        name, separator, credential_id = item.partition("=")
+        if not separator or not name.strip() or not credential_id.strip():
+            raise SystemExit(f"--bind-credential espera NOMBRE=ID, no {item!r}")
+        bindings[name.strip()] = credential_id.strip()
+    return bindings
+
+
+def bind_credentials(workflow: dict, bindings: dict[str, str]) -> int:
+    changed = 0
+    for node_item in workflow["nodes"]:
+        for credential in (node_item.get("credentials") or {}).values():
+            target = bindings.get(credential.get("name", ""))
+            if target and credential.get("id") != target:
+                credential["id"] = target
+                changed += 1
+    return changed
+
+
+def serialize(path: Path, variant: dict) -> str:
+    text = json.dumps(variant, ensure_ascii=False, indent=2) + "\n"
+    path.write_text(text, encoding="utf-8")
+    return text
+
+
+def check(variants: list[tuple[str, dict]], out: Path) -> int:
+    stale: list[str] = []
+    for arm, variant in variants:
+        path = out / f"legalfam-eval-{arm}.json"
+        expected = json.dumps(variant, ensure_ascii=False, indent=2) + "\n"
+        if not path.exists():
+            stale.append(f"{arm}: no esta generado ({path.name})")
+        elif path.read_text(encoding="utf-8") != expected:
+            stale.append(f"{arm}: quedo viejo respecto al workflow de produccion")
+        else:
+            print(f"  {arm:<16} al dia")
+
+    if stale:
+        print("\nDesincronizados:")
+        for problem in stale:
+            print(f"  {problem}")
+        print("\n-> regenera con `python -m eval.ablation.build_workflows` y vuelve a")
+        print("   importarlos en n8n. Los ficheros en disco no son la verdad: el workflow")
+        print("   de produccion lo es.")
+        return 2
+
+    print("\nLos brazos coinciden con el workflow de produccion.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

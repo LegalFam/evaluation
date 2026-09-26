@@ -1,0 +1,495 @@
+{
+  "coders": [
+    "A"
+  ],
+  "agreement": {
+    "coders": [
+      "A"
+    ]
+  },
+  "r4": [
+    "adv-col-006"
+  ],
+  "out_of_scope": {
+    "n": 15,
+    "rejected": 15,
+    "false_accepted": 0,
+    "false_accepted_with_citations": 0,
+    "clarification": 0
+  },
+  "in_scope": {
+    "n": 10,
+    "false_rejected": 0,
+    "answered": 9,
+    "clarification": 1
+  },
+  "parser_vs_outcome": {
+    "n": 29,
+    "agree": 29
+  },
+  "parser_vs_label": {
+    "n": 29,
+    "agree": 29
+  },
+  "partial": {
+    "adv-mix-201": {
+      "code": "R1",
+      "covered_in_scope_part": true,
+      "invaded_out_part": false
+    },
+    "adv-mix-202": {
+      "code": "R1",
+      "covered_in_scope_part": true,
+      "invaded_out_part": false
+    },
+    "adv-mix-203": {
+      "code": "R1",
+      "covered_in_scope_part": true,
+      "invaded_out_part": false
+    },
+    "adv-mix-204": {
+      "code": "R1",
+      "covered_in_scope_part": true,
+      "invaded_out_part": false
+    }
+  },
+  "by_family": {
+    "previsional": {
+      "R2": 1
+    },
+    "seguros": {
+      "R2": 1
+    },
+    "civil patrimonial": {
+      "R2": 3
+    },
+    "registral administrativo": {
+      "R2": 1
+    },
+    "educación y consumo": {
+      "R4": 1
+    },
+    "salud": {
+      "R2": 1
+    },
+    "tributario": {
+      "R2": 2
+    },
+    "migratorio": {
+      "R2": 1
+    },
+    "laboral": {
+      "R2": 1
+    },
+    "societario": {
+      "R2": 1
+    },
+    "administrativo": {
+      "R2": 1
+    },
+    "consumo": {
+      "R2": 1
+    },
+    "penal": {
+      "R2": 1
+    },
+    "alimentos": {
+      "R1": 2
+    },
+    "sociedad de gananciales": {
+      "R1": 1
+    },
+    "violencia familiar": {
+      "R1": 2
+    },
+    "tenencia y tutela": {
+      "R1": 1
+    },
+    "patria potestad": {
+      "R1": 1
+    },
+    "filiación": {
+      "R1": 1
+    },
+    "matrimonio": {
+      "R1": 1
+    },
+    "sucesiones": {
+      "R3": 1
+    },
+    "gananciales + tributario": {
+      "R1": 1
+    },
+    "alimentos + nacionalidad": {
+      "R1": 1
+    },
+    "violencia + societario": {
+      "R1": 1
+    },
+    "adopción + migratorio": {
+      "R1": 1
+    }
+  },
+  "items": {
+    "adv-prev-001": {
+      "scope_label": "FUERA",
+      "family": "previsional",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 9671,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-seg-002": {
+      "scope_label": "FUERA",
+      "family": "seguros",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 5203,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-deu-003": {
+      "scope_label": "FUERA",
+      "family": "civil patrimonial",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 5530,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-cop-004": {
+      "scope_label": "FUERA",
+      "family": "civil patrimonial",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 5578,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-dni-005": {
+      "scope_label": "FUERA",
+      "family": "registral administrativo",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 6156,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-col-006": {
+      "scope_label": "FUERA",
+      "family": "educación y consumo",
+      "parser_category": null,
+      "information_sufficiency": null,
+      "code": "R4",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 14468,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-sal-007": {
+      "scope_label": "FUERA",
+      "family": "salud",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 4063,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-rc-008": {
+      "scope_label": "FUERA",
+      "family": "civil patrimonial",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 3733,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-trib-009": {
+      "scope_label": "FUERA",
+      "family": "tributario",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 3641,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-mig-010": {
+      "scope_label": "FUERA",
+      "family": "migratorio",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 3733,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-lab-011": {
+      "scope_label": "FUERA",
+      "family": "laboral",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 4375,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-trib-012": {
+      "scope_label": "FUERA",
+      "family": "tributario",
+      "parser_category": "error",
+      "information_sufficiency": "SUFFICIENT",
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 4219,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-soc-013": {
+      "scope_label": "FUERA",
+      "family": "societario",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 3561,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-adm-014": {
+      "scope_label": "FUERA",
+      "family": "administrativo",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 3796,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-con-015": {
+      "scope_label": "FUERA",
+      "family": "consumo",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 3735,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-pen-016": {
+      "scope_label": "FUERA",
+      "family": "penal",
+      "parser_category": "error",
+      "information_sufficiency": null,
+      "code": "R2",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 3656,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-alim-101": {
+      "scope_label": "DENTRO",
+      "family": "alimentos",
+      "parser_category": "Pension de Alimentos (fijacion, aumento o reduccion)",
+      "information_sufficiency": "PARTIAL",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 2,
+      "latency_ms": 48436,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-sg-102": {
+      "scope_label": "DENTRO",
+      "family": "sociedad de gananciales",
+      "parser_category": "Sociedad de Gananciales",
+      "information_sufficiency": "PARTIAL",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 2,
+      "latency_ms": 48688,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-vf-103": {
+      "scope_label": "DENTRO",
+      "family": "violencia familiar",
+      "parser_category": "Divorcio y Separacion",
+      "information_sufficiency": "PARTIAL",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 3,
+      "latency_ms": 65139,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-ten-104": {
+      "scope_label": "DENTRO",
+      "family": "tenencia y tutela",
+      "parser_category": "Patria Potestad",
+      "information_sufficiency": "SUFFICIENT",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 5,
+      "latency_ms": 59765,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-pp-105": {
+      "scope_label": "DENTRO",
+      "family": "patria potestad",
+      "parser_category": "Patria Potestad",
+      "information_sufficiency": "SUFFICIENT",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 3,
+      "latency_ms": 36375,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-vf-106": {
+      "scope_label": "DENTRO",
+      "family": "violencia familiar",
+      "parser_category": "Violencia Familiar",
+      "information_sufficiency": "PARTIAL",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 3,
+      "latency_ms": 46578,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-fil-107": {
+      "scope_label": "DENTRO",
+      "family": "filiación",
+      "parser_category": "Filiacion y Paternidad",
+      "information_sufficiency": "PARTIAL",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 2,
+      "latency_ms": 56110,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-alim-108": {
+      "scope_label": "DENTRO",
+      "family": "alimentos",
+      "parser_category": "Pension de Alimentos",
+      "information_sufficiency": "PARTIAL",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 3,
+      "latency_ms": 44203,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-mat-109": {
+      "scope_label": "DENTRO",
+      "family": "matrimonio",
+      "parser_category": "Divorcio y Separacion",
+      "information_sufficiency": "SUFFICIENT",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 3,
+      "latency_ms": 46828,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-suc-110": {
+      "scope_label": "DENTRO",
+      "family": "sucesiones",
+      "parser_category": "Sucesiones y Herencias",
+      "information_sufficiency": "INSUFFICIENT",
+      "code": "R3",
+      "cited_articles": false,
+      "citations": 0,
+      "latency_ms": 4875,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-mix-201": {
+      "scope_label": "PARCIAL",
+      "family": "gananciales + tributario",
+      "parser_category": "Divorcio y Separacion",
+      "information_sufficiency": "PARTIAL",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 2,
+      "latency_ms": 61139,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-mix-202": {
+      "scope_label": "PARCIAL",
+      "family": "alimentos + nacionalidad",
+      "parser_category": "Pension de Alimentos",
+      "information_sufficiency": "PARTIAL",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 2,
+      "latency_ms": 117344,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-mix-203": {
+      "scope_label": "PARCIAL",
+      "family": "violencia + societario",
+      "parser_category": "Violencia Familiar",
+      "information_sufficiency": "PARTIAL",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 3,
+      "latency_ms": 51046,
+      "attempts": 1,
+      "notes": ""
+    },
+    "adv-mix-204": {
+      "scope_label": "PARCIAL",
+      "family": "adopción + migratorio",
+      "parser_category": "Adopcion",
+      "information_sufficiency": "PARTIAL",
+      "code": "R1",
+      "cited_articles": true,
+      "citations": 2,
+      "latency_ms": 61108,
+      "attempts": 1,
+      "notes": ""
+    }
+  }
+}

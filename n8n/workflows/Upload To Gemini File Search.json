@@ -1,0 +1,1169 @@
+{
+  "name": "Upload To Gemini File Search",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "ff4aed54-8b59-49d7-809e-46839d68f551",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -21168,
+        -3040
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "store-display-name",
+              "name": "fileSearchStoreDisplayName",
+              "value": "FamilyLaw",
+              "type": "string"
+            },
+            {
+              "id": "create-store",
+              "name": "createStoreIfMissing",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "markdown-folder",
+              "name": "markdownFolderId",
+              "value": "16GIhS4LyWlLjo6zHPE6AquP1sWnDDm1e",
+              "type": "string"
+            },
+            {
+              "id": "metadata-folder",
+              "name": "metadataFolderId",
+              "value": "1RKgIVvqg1tIGvp2ta-ElOb3p8F-82oXU",
+              "type": "string"
+            },
+            {
+              "id": "upload-log-folder",
+              "name": "uploadedLogFolderId",
+              "value": "15lNZHYElC11E4OdDf92EEwOyaNNlJfz9",
+              "type": "string"
+            },
+            {
+              "id": "errors-folder",
+              "name": "errorsFolderId",
+              "value": "1hT5RhGxvarh4WUpj9lna_3uxCE8Ej_DS",
+              "type": "string"
+            },
+            {
+              "id": "processed-markdown-folder",
+              "name": "processedMarkdownFolderId",
+              "value": "1jzuqeiGSqZJcPvs8Rs3xguSadOX4iiRh",
+              "type": "string"
+            },
+            {
+              "id": "processed-metadata-folder",
+              "name": "processedMetadataFolderId",
+              "value": "1uznXrc5injBILvd1peK8dHGbJpWcZkij",
+              "type": "string"
+            },
+            {
+              "id": "admin-fuente",
+              "name": "adminFuenteOverride",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c604c491-cae3-43ed-b330-67ba6be898a7",
+      "name": "Edit Upload Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -20944,
+        -3040
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.PROCESSING_API_BASE_URL || 'http://processing-api:8000') + '/file-search-stores/resolve' }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { display_name: $json.fileSearchStoreDisplayName, create_if_missing: $json.createStoreIfMissing } }}",
+        "options": {}
+      },
+      "id": "62e32e08-557d-46ea-a72e-dabd463e3441",
+      "name": "API - Resolve File Search Store",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -20720,
+        -3040
+      ],
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "markdown-folder",
+              "name": "markdownFolderId",
+              "value": "={{ $('Edit Upload Config').item.json.markdownFolderId }}",
+              "type": "string"
+            },
+            {
+              "id": "metadata-folder",
+              "name": "metadataFolderId",
+              "value": "={{ $('Edit Upload Config').item.json.metadataFolderId }}",
+              "type": "string"
+            },
+            {
+              "id": "uploaded-folder",
+              "name": "uploadedLogFolderId",
+              "value": "={{ $('Edit Upload Config').item.json.uploadedLogFolderId }}",
+              "type": "string"
+            },
+            {
+              "id": "errors-folder",
+              "name": "errorsFolderId",
+              "value": "={{ $('Edit Upload Config').item.json.errorsFolderId }}",
+              "type": "string"
+            },
+            {
+              "id": "processed-markdown-folder",
+              "name": "processedMarkdownFolderId",
+              "value": "={{ $('Edit Upload Config').item.json.processedMarkdownFolderId }}",
+              "type": "string"
+            },
+            {
+              "id": "processed-metadata-folder",
+              "name": "processedMetadataFolderId",
+              "value": "={{ $('Edit Upload Config').item.json.processedMetadataFolderId }}",
+              "type": "string"
+            },
+            {
+              "id": "admin-fuente",
+              "name": "adminFuenteOverride",
+              "value": "={{ $('Edit Upload Config').item.json.adminFuenteOverride || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "store-name",
+              "name": "fileSearchStoreName",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "store-display",
+              "name": "fileSearchStoreDisplayName",
+              "value": "={{ $json.display_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "525afc28-a63f-4289-bb59-ebd2c0bd4e48",
+      "name": "Set Resolved Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -20512,
+        -3040
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": ".md",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Set Resolved Config').item.json.markdownFolderId }}",
+            "mode": "id",
+            "cachedResultName": "output/markdown",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/16GIhS4LyWlLjo6zHPE6AquP1sWnDDm1e"
+          }
+        },
+        "options": {}
+      },
+      "id": "a3ec11b1-bb0a-49a4-a7c2-dd516de7fd45",
+      "name": "Google Drive - List Markdown",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -20288,
+        -3040
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "u8B3y5G6TQakG3GJ",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "54978652-d08b-4182-8afb-4e48900d981c",
+      "name": "Loop Over Markdown Files",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -20080,
+        -3040
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('Set Resolved Config').item.json;\nconst mdName = $json.name;\nconst baseName = mdName.replace(/\\.md$/i, '');\nreturn [{\n  json: {\n    markdownFileId: $json.id,\n    mdName,\n    baseName,\n    metadataName: `${baseName}.metadata.json`,\n    fileSearchStoreName: config.fileSearchStoreName,\n    fileSearchStoreDisplayName: config.fileSearchStoreDisplayName,\n    metadataFolderId: config.metadataFolderId,\n    uploadedLogFolderId: config.uploadedLogFolderId,\n    errorsFolderId: config.errorsFolderId,\n    processedMarkdownFolderId: config.processedMarkdownFolderId,\n    processedMetadataFolderId: config.processedMetadataFolderId,\n    adminFuenteOverride: config.adminFuenteOverride\n  }\n}];"
+      },
+      "id": "15df264a-b049-4391-8988-a17e2a2dab3c",
+      "name": "Derive Metadata Name",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -19760,
+        -3040
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "={{ \"name = '\" + $json.metadataName.replace(/\\\\/g, \"\\\\\\\\\").replace(/'/g, \"\\\\'\") + \"'\" }}",
+        "limit": 1,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $json.metadataFolderId }}",
+            "mode": "id",
+            "cachedResultName": "output/metadata",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1RKgIVvqg1tIGvp2ta-ElOb3p8F-82oXU"
+          }
+        },
+        "options": {}
+      },
+      "id": "c075fb2d-07d7-4b5a-885a-5755e92d7475",
+      "name": "Google Drive - Find Metadata",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -19504,
+        -3040
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "u8B3y5G6TQakG3GJ",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "metadata-found",
+              "leftValue": "={{ !!$json.id }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4dc8e554-f587-4a02-a062-ddb0b9644b96",
+      "name": "IF - Metadata Found",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -19280,
+        -3040
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {
+          "binaryPropertyName": "metadataFile"
+        }
+      },
+      "id": "8d97b26f-e6cd-47d0-8c9f-9690a28a7572",
+      "name": "Google Drive - Download Metadata",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -19056,
+        -3136
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "u8B3y5G6TQakG3GJ",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const pair = $('Derive Metadata Name').item.json;\nconst metadataBuffer = await this.helpers.getBinaryDataBuffer(0, 'metadataFile');\nconst metadata = JSON.parse(metadataBuffer.toString('utf8'));\nif (pair.adminFuenteOverride && String(pair.adminFuenteOverride).trim()) {\n  metadata.fuente = String(pair.adminFuenteOverride).trim();\n}\nreturn [{ json: { ...pair, metadataFileId: $json.id, metadata } }];"
+      },
+      "id": "8265aaaf-c551-4e5d-b871-3a1b3187f4cf",
+      "name": "Prepare Metadata Review",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -18864,
+        -3136
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const resumeUrl = typeof $execution !== 'undefined' ? $execution.resumeUrl : undefined;\nconsole.log(`Metadata review form for ${$json.mdName}: ${resumeUrl || 'resumeUrl unavailable in this node context'}`);\nreturn $input.all();"
+      },
+      "id": "61387e74-d2a7-4c25-9ffe-e69fb05f7142",
+      "name": "Log Review Form URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -18688,
+        -3136
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "form",
+        "formTitle": "Review Metadata Before Gemini Upload",
+        "formDescription": "=Edit the metadata and submit to continue this same workflow execution.\n\nThe Markdown File name is: {{ $json.mdName }}\nAnd its being uploaded to: {{ $json.fileSearchStoreDisplayName }}",
+        "formFields": {
+          "values": [
+            {
+              "fieldName": "markdownFileId",
+              "fieldType": "hiddenField",
+              "fieldValue": "={{ $json.markdownFileId }}"
+            },
+            {
+              "fieldName": "metadataFileId",
+              "fieldType": "hiddenField",
+              "fieldValue": "={{ $json.metadataFileId }}"
+            },
+            {
+              "fieldName": "mdName",
+              "fieldType": "hiddenField",
+              "fieldValue": "={{ $json.mdName }}"
+            },
+            {
+              "fieldName": "baseName",
+              "fieldType": "hiddenField",
+              "fieldValue": "={{ $json.baseName }}"
+            },
+            {
+              "fieldName": "fileSearchStoreName",
+              "fieldType": "hiddenField",
+              "fieldValue": "={{ $json.fileSearchStoreName }}"
+            },
+            {
+              "fieldName": "uploadedLogFolderId",
+              "fieldType": "hiddenField",
+              "fieldValue": "={{ $json.uploadedLogFolderId }}"
+            },
+            {
+              "fieldName": "errorsFolderId",
+              "fieldType": "hiddenField",
+              "fieldValue": "={{ $json.errorsFolderId }}"
+            },
+            {
+              "fieldName": "processedMarkdownFolderId",
+              "fieldType": "hiddenField",
+              "fieldValue": "={{ $json.processedMarkdownFolderId }}"
+            },
+            {
+              "fieldName": "processedMetadataFolderId",
+              "fieldType": "hiddenField",
+              "fieldValue": "={{ $json.processedMetadataFolderId }}"
+            },
+            {
+              "fieldLabel": "titulo",
+              "defaultValue": "={{ $json.metadata.titulo || '' }}"
+            },
+            {
+              "fieldLabel": "identificador",
+              "defaultValue": "={{ $json.metadata.identificador || '' }}"
+            },
+            {
+              "fieldLabel": "entidad",
+              "defaultValue": "={{ $json.metadata.entidad || '' }}"
+            },
+            {
+              "fieldLabel": "fecha",
+              "defaultValue": "={{ $json.metadata.fecha || '' }}"
+            },
+            {
+              "fieldLabel": "materia",
+              "defaultValue": "={{ $json.metadata.materia || '' }}"
+            },
+            {
+              "fieldLabel": "expediente",
+              "defaultValue": "={{ $json.metadata.expediente || '' }}"
+            },
+            {
+              "fieldLabel": "articulo",
+              "defaultValue": "={{ $json.metadata.articulo || '' }}"
+            },
+            {
+              "fieldLabel": "norma",
+              "defaultValue": "={{ $json.metadata.norma || '' }}"
+            },
+            {
+              "fieldLabel": "pleno",
+              "defaultValue": "={{ $json.metadata.pleno || '' }}"
+            },
+            {
+              "fieldLabel": "protocolo",
+              "defaultValue": "={{ $json.metadata.protocolo || '' }}"
+            },
+            {
+              "fieldLabel": "Fuente",
+              "placeholder": "URL, repositorio u origen documental",
+              "defaultValue": "={{ $json.metadata.fuente || '' }}"
+            },
+            {
+              "fieldLabel": "categoriasJSON",
+              "fieldType": "textarea",
+              "placeholder": "[{\"categoria\":\"Generales\",\"subcategorias\":[\"Otros\"]}]",
+              "defaultValue": "={{ JSON.stringify($json.metadata.categorias || [{ categoria: 'Generales', subcategorias: ['Otros'] }], null, 2) }}",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "confidence",
+              "fieldType": "number",
+              "defaultValue": "={{ $json.metadata.confidence || 0.5 }}"
+            },
+            {
+              "fieldLabel": "observaciones",
+              "fieldType": "textarea",
+              "defaultValue": "={{ $json.metadata.observaciones || '' }}"
+            },
+            {
+              "fieldLabel": "uploadDecision",
+              "fieldType": "dropdown",
+              "defaultValue": "upload",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "upload"
+                  },
+                  {
+                    "option": "skip"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "23797161-fa93-423a-a3a5-59d28c27c464",
+      "name": "Wait - Metadata Review Form",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -18496,
+        -3136
+      ],
+      "webhookId": "metadata-review"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "should-upload",
+              "leftValue": "={{ $json['uploadDecision'] }}",
+              "rightValue": "upload",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "276dc82f-e3e1-4281-a95b-0cbc02f5efcb",
+      "name": "IF - Upload Decision",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -18320,
+        -3136
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.markdownFileId }}",
+          "mode": "id"
+        },
+        "options": {
+          "binaryPropertyName": "markdownFile"
+        }
+      },
+      "id": "e7bc5486-f7f3-492e-b36f-c051d74b19d8",
+      "name": "Google Drive - Download Markdown",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -18096,
+        -3248
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "u8B3y5G6TQakG3GJ",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const form = $('Wait - Metadata Review Form').first().json;\nconst reviewed = $('Prepare Metadata Review').first().json.metadata || {};\nconst markdownBuffer = await this.helpers.getBinaryDataBuffer(0, 'markdownFile');\nconst emptyToNull = (value) => value === undefined || value === null || String(value).trim() === '' ? null : String(value).trim();\nconst formValue = (...keys) => {\n  for (const key of keys) {\n    if (form[key] !== undefined && form[key] !== null && String(form[key]).trim() !== '') {\n      return form[key];\n    }\n  }\n  return undefined;\n};\nconst submittedValue = (...keys) => {\n  for (const key of keys) {\n    if (Object.prototype.hasOwnProperty.call(form, key)) {\n      return form[key];\n    }\n  }\n  return undefined;\n};\nconst normalizeSubmittedValue = (value) => value === undefined || value === null ? null : String(value).trim();\nconst metadataValue = (key, ...aliases) => {\n  const value = submittedValue(key, ...aliases);\n  return value !== undefined ? normalizeSubmittedValue(value) : emptyToNull(reviewed[key]);\n};\nlet categorias;\ntry {\n  const categoriasRaw = formValue('categoriasJSON', 'categoriasJson', 'CategoriasJSON') ?? JSON.stringify(reviewed.categorias || []);\n  categorias = JSON.parse(categoriasRaw || '[]');\n} catch (error) {\n  throw new Error(`Categorias JSON invalido: ${error.message}`);\n}\nif (!Array.isArray(categorias) || categorias.length === 0) {\n  throw new Error('Categorias JSON debe ser un arreglo con al menos una categoria');\n}\nconst confidenceRaw = formValue('confidence', 'Confidence') ?? reviewed.confidence ?? 0.5;\nconst confidence = Number(confidenceRaw);\nif (!Number.isFinite(confidence)) {\n  throw new Error(`confidence debe ser numerico: ${confidenceRaw}`);\n}\nconst metadata = {\n  titulo: metadataValue('titulo', 'Titulo', 'TÃ­tulo'),\n  identificador: metadataValue('identificador', 'Identificador'),\n  entidad: metadataValue('entidad', 'Entidad'),\n  fecha: metadataValue('fecha', 'Fecha'),\n  materia: metadataValue('materia', 'Materia'),\n  expediente: metadataValue('expediente', 'Expediente'),\n  articulo: metadataValue('articulo', 'Articulo', 'ArtÃ­culo'),\n  norma: metadataValue('norma', 'Norma'),\n  pleno: metadataValue('pleno', 'Pleno'),\n  protocolo: metadataValue('protocolo', 'Protocolo'),\n  fuente: metadataValue('fuente', 'Fuente', 'source'),\n  categorias,\n  confidence,\n  observaciones: metadataValue('observaciones', 'Observaciones')\n};\nreturn [{\n  json: {\n    filename: form.mdName,\n    baseName: form.baseName,\n    markdownFileId: form.markdownFileId,\n    metadataFileId: form.metadataFileId,\n    markdown: markdownBuffer.toString('utf8'),\n    metadata,\n    file_search_store_name: form.fileSearchStoreName,\n    create_store_if_missing: false,\n    wait_until_done: true,\n    max_wait_seconds: 900,\n    uploadedLogFolderId: form.uploadedLogFolderId,\n    errorsFolderId: form.errorsFolderId,\n    processedMarkdownFolderId: form.processedMarkdownFolderId,\n    processedMetadataFolderId: form.processedMetadataFolderId\n  }\n}];"
+      },
+      "id": "7483222e-1857-4e20-a56d-7f7eb8202a66",
+      "name": "Prepare Upload Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -17872,
+        -3248
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.PROCESSING_API_BASE_URL || 'http://processing-api:8000') + '/upload-gemini-file-search' }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "3489d726-e530-4f8e-9b99-da4977159cc0",
+      "name": "API - Upload Gemini File Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -17664,
+        -3248
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const payload = $('Prepare Upload Payload').item.json;\nconst result = { filename: payload.filename, metadata: payload.metadata, upload: $json, uploaded_at: new Date().toISOString() };\nconst item = { json: { logName: `${payload.baseName}.gemini-upload.json`, result, uploadedLogFolderId: payload.uploadedLogFolderId }, binary: {} };\nitem.binary.log = await this.helpers.prepareBinaryData(Buffer.from(JSON.stringify(result, null, 2), 'utf8'), item.json.logName, 'application/json');\nreturn [item];"
+      },
+      "id": "19de6fc3-cea2-41c1-b1a8-9874665ba2ca",
+      "name": "Prepare Upload Log",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -17440,
+        -3328
+      ]
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "log",
+        "name": "={{ $json.logName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.uploadedLogFolderId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "556d919f-2397-44a6-823a-ddf39bd108cf",
+      "name": "Google Drive - Upload Log",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -17216,
+        -3328
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "u8B3y5G6TQakG3GJ",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Prepare Upload Payload').item.json.markdownFileId }}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Prepare Upload Payload').item.json.processedMarkdownFolderId }}",
+          "mode": "id",
+          "cachedResultName": "processed/markdown"
+        }
+      },
+      "id": "1eb1fdc0-deab-466a-96da-627a4ce2e7f6",
+      "name": "Google Drive - Move Markdown To Processed",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -16992,
+        -3328
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "u8B3y5G6TQakG3GJ",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Prepare Upload Payload').item.json.metadataFileId }}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Prepare Upload Payload').item.json.processedMetadataFolderId }}",
+          "mode": "id",
+          "cachedResultName": "processed/metadata"
+        }
+      },
+      "id": "f878758b-ecf0-4927-b8ca-82eb6c6509ec",
+      "name": "Google Drive - Move Metadata To Processed",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -16768,
+        -3328
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "u8B3y5G6TQakG3GJ",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const source = $('Wait - Metadata Review Form').item?.json || $('Derive Metadata Name').item?.json || {};\nconst record = { filename: source.mdName || 'unknown.md', expected_metadata: source.metadataName || null, error: $json, happened_at: new Date().toISOString() };\nconst safeName = (source.baseName || 'unknown').replace(/[^a-zA-Z0-9_.-]+/g, '-');\nconst item = { json: { errorName: `${safeName}.gemini-upload.error.json`, record, errorsFolderId: source.errorsFolderId || $('Set Resolved Config').item.json.errorsFolderId }, binary: {} };\nitem.binary.error = await this.helpers.prepareBinaryData(Buffer.from(JSON.stringify(record, null, 2), 'utf8'), item.json.errorName, 'application/json');\nreturn [item];"
+      },
+      "id": "61c246af-9ba3-4239-8b12-7bfef59f3884",
+      "name": "Prepare Upload Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -17440,
+        -3040
+      ]
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "error",
+        "name": "={{ $json.errorName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.errorsFolderId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "2bda3374-d091-4574-b814-834e82a6e478",
+      "name": "Google Drive - Upload Error",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -17216,
+        -3040
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "u8B3y5G6TQakG3GJ",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const form = $('Wait - Metadata Review Form').item.json;\nconst result = { filename: form.mdName, decision: 'skip', skipped_at: new Date().toISOString() };\nconst item = { json: { logName: `${form.baseName}.gemini-skip.json`, result, uploadedLogFolderId: form.uploadedLogFolderId }, binary: {} };\nitem.binary.log = await this.helpers.prepareBinaryData(Buffer.from(JSON.stringify(result, null, 2), 'utf8'), item.json.logName, 'application/json');\nreturn [item];"
+      },
+      "id": "1a33d3b4-2572-47b8-a44a-d4621d461e7e",
+      "name": "Prepare Skip Log",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -18096,
+        -2976
+      ]
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "log",
+        "name": "={{ $json.logName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.uploadedLogFolderId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "b4c3732f-02a7-4cab-8120-601025994999",
+      "name": "Google Drive - Upload Skip Log",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -17856,
+        -2976
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "u8B3y5G6TQakG3GJ",
+          "name": "Google Drive account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const pair = $('Derive Metadata Name').item?.json || {};\nconst record = { filename: pair.mdName || 'unknown.md', expected_metadata: pair.metadataName || null, error: $json, happened_at: new Date().toISOString() };\nconst safeName = (pair.baseName || 'unknown').replace(/[^a-zA-Z0-9_.-]+/g, '-');\nconst item = { json: { errorName: `${safeName}.gemini-review.error.json`, record, errorsFolderId: pair.errorsFolderId || $('Set Resolved Config').item.json.errorsFolderId }, binary: {} };\nitem.binary.error = await this.helpers.prepareBinaryData(Buffer.from(JSON.stringify(record, null, 2), 'utf8'), item.json.errorName, 'application/json');\nreturn [item];"
+      },
+      "id": "59b35a71-52e3-4238-b5e2-1b3ff6b66f79",
+      "name": "Prepare Missing Metadata Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -19072,
+        -2752
+      ]
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "error",
+        "name": "={{ $json.errorName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.errorsFolderId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "df8fa02e-c864-4729-b594-5aa5bdc134f9",
+      "name": "Google Drive - Upload Missing Metadata Error",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -18848,
+        -2752
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "u8B3y5G6TQakG3GJ",
+          "name": "Google Drive account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Upload Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Upload Config": {
+      "main": [
+        [
+          {
+            "node": "API - Resolve File Search Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "API - Resolve File Search Store": {
+      "main": [
+        [
+          {
+            "node": "Set Resolved Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Resolved Config": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - List Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - List Markdown": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Markdown Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Markdown Files": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Derive Metadata Name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Derive Metadata Name": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Find Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Find Metadata": {
+      "main": [
+        [
+          {
+            "node": "IF - Metadata Found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - Metadata Found": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Download Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Missing Metadata Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Download Metadata": {
+      "main": [
+        [
+          {
+            "node": "Prepare Metadata Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Metadata Review": {
+      "main": [
+        [
+          {
+            "node": "Log Review Form URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Review Form URL": {
+      "main": [
+        [
+          {
+            "node": "Wait - Metadata Review Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait - Metadata Review Form": {
+      "main": [
+        [
+          {
+            "node": "IF - Upload Decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - Upload Decision": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Download Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Skip Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Download Markdown": {
+      "main": [
+        [
+          {
+            "node": "Prepare Upload Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Upload Payload": {
+      "main": [
+        [
+          {
+            "node": "API - Upload Gemini File Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "API - Upload Gemini File Search": {
+      "main": [
+        [
+          {
+            "node": "Prepare Upload Log",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Upload Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Upload Log": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Upload Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Upload Log": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Move Markdown To Processed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Move Markdown To Processed": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Move Metadata To Processed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Move Metadata To Processed": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Markdown Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Upload Error": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Upload Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Upload Error": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Markdown Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Skip Log": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Upload Skip Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Upload Skip Log": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Markdown Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Missing Metadata Error": {
+      "main": [
+        [
+          {
+            "node": "Google Drive - Upload Missing Metadata Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive - Upload Missing Metadata Error": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Markdown Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9081de8a-43f0-41e0-a247-61437dc5180d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b4fe1b7f55c924806604a2431485ada3cf45cd4c8e6a1134735f55424b9bdf63"
+  },
+  "id": "1VABCl5RCrmJ9d58",
+  "tags": []
+}

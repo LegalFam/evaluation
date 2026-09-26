@@ -1,0 +1,1 @@
+{"name":"fault-injection-runner","private":true,"type":"module","dependencies":{"pg":"8.23.0","playwright":"1.63.0"}}
