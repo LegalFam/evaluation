@@ -1,5 +1,7 @@
 # LegalFam evaluation package
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22971391.svg)](https://doi.org/10.5281/zenodo.22971391)
+
 Replication package for *A Citation-Grounded Multi-Agent LLM System for Trustworthy Family Law
 Orientation in Peru* (Mori, Delgado and Rivadeneyra, Universidad Peruana de Ciencias Aplicadas).
 
@@ -153,6 +155,7 @@ checkout; to re-run it, use branch `fault-injection-experiment` of
 
 ## Citation
 
+Archived on Zenodo: [10.5281/zenodo.22971391](https://doi.org/10.5281/zenodo.22971391) (version 1.0.0).
 See `CITATION.cff`.
 
 ## License

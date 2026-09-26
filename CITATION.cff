@@ -18,6 +18,8 @@ authors:
     family-names: Rivadeneyra
     affiliation: "Universidad Peruana de Ciencias Aplicadas (UPC)"
 version: 1.0.0
+doi: 10.5281/zenodo.22971391
+date-released: 2026-09-26
 license:
   - MIT
   - CC-BY-4.0
