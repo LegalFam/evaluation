@@ -1,6 +1,6 @@
 # LegalFam evaluation package
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22971391.svg)](https://doi.org/10.5281/zenodo.22971391)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22971390.svg)](https://doi.org/10.5281/zenodo.22971390)
 
 Replication package for *A Citation-Grounded Multi-Agent LLM System for Trustworthy Family Law
 Orientation in Peru* (Mori, Delgado and Rivadeneyra, Universidad Peruana de Ciencias Aplicadas).
@@ -76,7 +76,7 @@ api/eval/dataset/             family_law_v1.jsonl (63 questions), adversarial.js
 api/eval/runs/ablation/       stored responses per arm + per_question.jsonl, results.json, report.md
 api/eval/runs/scope/          boundary-set responses, scope_coding.csv, scope_results.json, report.md
 api/eval/runs/scope-probe/    probe_results.jsonl (307 classifier calls)
-work/corpus/                  the 62 corpus documents, named as in Appendix D
+work/corpus/                  the 62 corpus documents (Section "Scope of the legal domain")
 n8n/workflows/                production workflows as described in the paper (with the scope rule)
 n8n/workflows/eval/           the full arm used for the boundary set
 n8n/ablation/                 the production workflows and the five arms that produced the stored run
@@ -155,8 +155,9 @@ checkout; to re-run it, use branch `fault-injection-experiment` of
 
 ## Citation
 
-Archived on Zenodo: [10.5281/zenodo.22971391](https://doi.org/10.5281/zenodo.22971391) (version 1.0.0).
-See `CITATION.cff`.
+Archived on Zenodo: [10.5281/zenodo.22971390](https://doi.org/10.5281/zenodo.22971390) (all versions; resolves to the latest).
+Version 1.0.1 corrects this README only; code, data and stored responses are identical to 1.0.0
+([10.5281/zenodo.22971391](https://doi.org/10.5281/zenodo.22971391)). See `CITATION.cff`.
 
 ## License
 

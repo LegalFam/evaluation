@@ -17,9 +17,9 @@ authors:
   - given-names: Joaquín
     family-names: Rivadeneyra
     affiliation: "Universidad Peruana de Ciencias Aplicadas (UPC)"
-version: 1.0.0
-doi: 10.5281/zenodo.22971391
-date-released: 2026-09-26
+version: 1.0.1
+doi: 10.5281/zenodo.22971390
+date-released: 2026-09-28
 license:
   - MIT
   - CC-BY-4.0
